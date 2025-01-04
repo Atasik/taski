@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { URL } from "./constants";
 import axios from "axios";
 import TaskEditModal from "./components/TaskEditModal";
 import Task from "./components/Task";
@@ -19,7 +20,7 @@ const App = () => {
 
   const refreshList = () => {
     axios
-      .get("/api/tasks/")
+      .get(`${URL}/api/tasks/`)
       .then((res) => setTaskList(res.data))
       .catch(console.error);
   };
@@ -30,8 +31,8 @@ const App = () => {
 
   const handleSubmit = (item) => {
     const request = item.id
-      ? axios.put(`/api/tasks/${item.id}/`, item)
-      : axios.post("/api/tasks/", item);
+      ? axios.put(`${URL}/api/tasks/${item.id}/`, item)
+      : axios.post(`${URL}/api/tasks/`, item);
 
     request
       .then((res) => {
@@ -43,7 +44,7 @@ const App = () => {
 
   const handleDelete = (item) => {
     axios
-      .delete(`/api/tasks/${item.id}/`)
+      .delete(`${URL}/api/tasks/${item.id}/`)
       .then(refreshList)
       .catch(console.error);
   };

@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  backend:
+    container_name: 'taski-backend'
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    image: backend-compose-taski
+    command: >
+      sh -c "python manage.py migrate --noinput && 
+             python manage.py runserver 0.0.0.0:8080"
+    restart: always
+    volumes:
+      - .:/code
+    ports:
+      - '8080:8080'
+    networks:
+      - internal
+
+  frontend:
+    container_name: 'taski-frontend'
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    image: frontend-compose-taski
+    restart: always
+    ports:
+      - '3000:80'
+    networks:
+      - external
+
+networks:
+  internal:
+  external:
