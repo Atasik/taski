@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taski-backend
+  namespace: taski
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: taski-backend
+  template:
+    metadata:
+      labels:
+        app: taski-backend
+    spec:
+      containers:
+        - name: backend
+          image: atasik/backend-compose-taski:latest
+          ports:
+            - containerPort: 8080
+          command: ["/bin/sh", "-c", "python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:8080"]

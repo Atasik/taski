@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taski-frontend
+  namespace: taski
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: taski-frontend
+  template:
+    metadata:
+      labels:
+        app: taski-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: atasik/frontend-compose-taski:latest
+          ports:
+            - containerPort: 80
